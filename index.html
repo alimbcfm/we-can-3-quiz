@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Language Worksheet</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #F7F9FC; padding: 20px; direction: rtl; }
+        .container { max-width: 850px; margin: 0 auto; background: #FFF; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        header { text-align: center; border-bottom: 2px dashed #4A90E2; padding-bottom: 15px; margin-bottom: 20px; }
+        .designer-tag { background: #6C5CE7; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; display: inline-block; margin-top: 5px; }
+        .student-info { display: flex; gap: 15px; margin-bottom: 20px; background: #EBF5FB; padding: 12px; border-radius: 8px; }
+        .student-info input { padding: 8px 12px; flex: 1; border: 1px solid #CCC; border-radius: 5px; font-size: 15px; }
+        .section-box { border: 1px solid #DDD; border-radius: 8px; padding: 18px; margin-bottom: 20px; background: #FAFAFA; }
+        .skill-header { background: #27AE60; color: white; padding: 6px 14px; border-radius: 15px; font-weight: bold; display: inline-block; margin-bottom: 15px; font-size: 16px; }
+        .question-item { background: white; padding: 14px; border-radius: 6px; margin-bottom: 12px; border-right: 4px solid #4A90E2; direction: ltr; text-align: left; }
+        .question-text { font-size: 16px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .options { display: flex; gap: 15px; flex-wrap: wrap; }
+        .feedback { font-size: 14px; font-weight: bold; margin-top: 8px; display: none; direction: rtl; text-align: right; }
+        .correct-feedback { color: #27AE60; }
+        .wrong-feedback { color: #C0392B; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; direction: ltr; }
+        .card-item { background: white; padding: 12px; border: 1px solid #DDD; border-radius: 8px; text-align: center; }
+        .img-box { font-size: 40px; margin-bottom: 8px; }
+        select { padding: 6px 10px; border-radius: 5px; border: 1px solid #CCC; font-size: 14px; }
+        .actions { text-align: center; margin-top: 25px; }
+        .btn { padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: white; margin: 5px; }
+        .btn-submit { background-color: #2ECC71; }
+        .btn-reset { background-color: #E74C3C; }
+        #result-panel { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; background: #FFF; border: 2px dashed #3498DB; }
+
+        .seal-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #DDD; vertical-align: middle; }
+
+        /* نافذة الإغلاق المنبثقة */
+        .lock-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 99999; justify-content: center; align-items: center; }
+        .lock-card { background: #FFFFFF; width: 90%; max-width: 440px; padding: 30px 25px; border-radius: 20px; text-align: center; border: 3px solid #E11D48; direction: rtl; }
+        .lock-icon { font-size: 55px; margin-bottom: 10px; display: inline-block; background: #FFE4E6; width: 90px; height: 90px; line-height: 90px; border-radius: 50%; border: 2px solid #FDA4AF; }
+        .lock-title { color: #E11D48; font-size: 22px; font-weight: bold; margin-bottom: 12px; }
+        .lock-message { color: #334155; font-size: 17px; line-height: 1.6; margin-bottom: 25px; font-weight: 600; }
+        .lock-btn { background: #E11D48; color: white; border: none; padding: 12px 35px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="lockModal" class="lock-overlay">
+    <div class="lock-card">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">تنبيه إغلاق الصفحة</div>
+        <div class="lock-message">تم قفل الصفحة من صاحب الموقع الاستاذ علي عسيري</div>
+        <button class="lock-btn" onclick="confirmLock()">موافق</button>
+    </div>
+</div>
+
+<div class="container" id="mainContainer">
+    <header>
+        <h1>English Language Worksheet</h1>
+        <h2>Interactive Revision Quiz</h2>
+        <span class="designer-tag">✨ تصميم الأستاذ علي عسيري ✨</span>
+    </header>
+
+    <form id="quizForm">
+        <div class="student-info">
+            <input type="text" id="studentName" placeholder="Name : ....................................">
+            <input type="text" id="studentClass" placeholder="Class : .........">
+        </div>
+
+        <!-- Section 1: CHOOSE -->
+        <div class="section-box">
+            <span class="skill-header">1. CHOOSE</span>
+            <div class="question-item">
+                <div class="question-text">1. What is your name?</div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="p1_q1" value="A"> A. I am 13 .</label>
+                    <label><input type="radio" name="p1_q1" value="B"> B. My name is Ali .</label>
+                </div>
+                <div class="feedback" id="fb_p1_q1"></div>
+            </div>
+            <div class="question-item">
+                <div class="question-text">
+                    2. What is that? 
+                    <img src="https://images.unsplash.com/photo-1598439210625-5067c578f3f6?w=200" alt="Seal" class="seal-img">
+                </div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="p1_q2" value="A"> A. It's a seal.</label>
+                    <label><input type="radio" name="p1_q2" value="B"> B. It's a whale.</label>
+                </div>
+                <div class="feedback" id="fb_p1_q2"></div>
+            </div>
+        </div>
+
+        <!-- Section 2: CHOOSE ✔️ OR ❌ -->
+        <div class="section-box">
+            <span class="skill-header">2. CHOOSE ✔️ OR ❌</span>
+            <div class="grid-cards">
+                <div class="card-item">
+                    <div class="img-box">💻</div>
+                    <div>This is a computer.</div>
+                    <select id="tf1" class="shuffle-select"><option value="">Select...</option><option value="true">✔️ True</option><option value="false">❌ False</option></select>
+                    <div class="feedback" id="fb_tf1"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🐋</div>
+                    <div>The whale is small.</div>
+                    <select id="tf2" class="shuffle-select"><option value="">Select...</option><option value="false">❌ False</option><option value="true">✔️ True</option></select>
+                    <div class="feedback" id="fb_tf2"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🐬</div>
+                    <div>This is a dolphin.</div>
+                    <select id="tf3" class="shuffle-select"><option value="">Select...</option><option value="true">✔ True</option><option value="false">❌ False</option></select>
+                    <div class="feedback" id="fb_tf3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: DO AS SHOWN BETWEEN BRACKETS -->
+        <div class="section-box">
+            <span class="skill-header">3. DO AS SHOWN BETWEEN BRACKETS</span>
+            <div class="question-item">
+                <div class="question-text">1. ________ skirt is this? It's mine.</div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="g1" value="who"> who</label>
+                    <label><input type="radio" name="g1" value="whose"> whose</label>
+                    <label><input type="radio" name="g1" value="where"> where</label>
+                </div>
+                <div class="feedback" id="fb_g1"></div>
+            </div>
+            <div class="question-item">
+                <div class="question-text">2. Seahorse is ________.</div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="g2" value="fast"> fast</label>
+                    <label><input type="radio" name="g2" value="scary"> scary</label>
+                    <label><input type="radio" name="g2" value="slow"> slow</label>
+                </div>
+                <div class="feedback" id="fb_g2"></div>
+            </div>
+        </div>
+
+        <!-- Section 4: CHOOSE -->
+        <div class="section-box">
+            <span class="skill-header">4. CHOOSE</span>
+            <div class="question-item">
+                <div class="question-text">1. I am a teacher , ________ name is Nora .</div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="g3" value="his"> his</label>
+                    <label><input type="radio" name="g3" value="my"> my</label>
+                    <label><input type="radio" name="g3" value="your"> your</label>
+                </div>
+                <div class="feedback" id="fb_g3"></div>
+            </div>
+            <div class="question-item">
+                <div class="question-text">2. I ________ a box.</div>
+                <div class="options shuffle-container">
+                    <label><input type="radio" name="g4" value="is"> is</label>
+                    <label><input type="radio" name="g4" value="has"> has</label>
+                    <label><input type="radio" name="g4" value="have"> have</label>
+                </div>
+                <div class="feedback" id="fb_g4"></div>
+            </div>
+        </div>
+
+        <!-- Section 5: CHOOSE -->
+        <div class="section-box">
+            <span class="skill-header">5. CHOOSE</span>
+            <div class="grid-cards">
+                <div class="card-item">
+                    <div class="img-box">👡</div>
+                    <select id="v1" class="shuffle-select"><option value="">Select...</option><option value="sandals">sandals</option><option value="jacket">jacket</option></select>
+                    <div class="feedback" id="fb_v1"></div>
+                </div>
+                <div class="card-item"><div class="img-box">🧢</div><select id="v2" class="shuffle-select"><option value="">Select...</option><option value="Thobe">Thobe</option><option value="cap">cap</option></select><div class="feedback" id="fb_v2"></div></div>
+                <div class="card-item"><div class="img-box">👕</div><select id="v3" class="shuffle-select"><option value="">Select...</option><option value="T-shirts">T-shirts</option><option value="Hat">Hat</option></select><div class="feedback" id="fb_v3"></div></div>
+                <div class="card-item"><div class="img-box">⭐</div><select id="v4" class="shuffle-select"><option value="">Select...</option><option value="starfish">starfish</option><option value="cat">cat</option></select><div class="feedback" id="fb_v4"></div></div>
+                <div class="card-item"><div class="img-box">🦀</div><select id="v5" class="shuffle-select"><option value="">Select...</option><option value="fish">fish</option><option value="crab">crab</option></select><div class="feedback" id="fb_v5"></div></div>
+                <div class="card-item"><div class="img-box">🦄</div><select id="v6" class="shuffle-select"><option value="">Select...</option><option value="Seahorse">Seahorse</option><option value="whale">whale</option></select><div class="feedback" id="fb_v6"></div></div>
+            </div>
+        </div>
+
+        <!-- Section 6: CHOOSE THE CORRECT LETTER -->
+        <div class="section-box">
+            <span class="skill-header">6. CHOOSE THE CORRECT LETTER</span>
+            <div class="grid-cards">
+                <div class="card-item">
+                    <div class="img-box">🐑</div>
+                    <div>sh _ _ p</div>
+                    <select id="l1" class="shuffle-select"><option value="">Select...</option><option value="ea">ea</option><option value="ee">ee</option></select>
+                    <div class="feedback" id="fb_l1"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🥩</div>
+                    <div>m _ _ t</div>
+                    <select id="l2" class="shuffle-select"><option value="">Select...</option><option value="ea">ea</option><option value="ee">ee</option></select>
+                    <div class="feedback" id="fb_l2"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🏃‍♂️</div>
+                    <div>pl _ _</div>
+                    <select id="l3" class="shuffle-select"><option value="">Select...</option><option value="ay">ay</option><option value="ea">ea</option></select>
+                    <div class="feedback" id="fb_l3"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🐄</div>
+                    <div>c _ _</div>
+                    <select id="l4" class="shuffle-select"><option value="">Select...</option><option value="ow">ow</option><option value="ou">ou</option></select>
+                    <div class="feedback" id="fb_l4"></div>
+                </div>
+                <div class="card-item">
+                    <div class="img-box">🐭</div>
+                    <div>m _ _ se</div>
+                    <select id="l5" class="shuffle-select"><option value="">Select...</option><option value="ow">ow</option><option value="ou">ou</option></select>
+                    <div class="feedback" id="fb_l5"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; font-weight: bold; font-size: 18px; color: #27AE60; margin-bottom: 15px;">
+            TEACHER : 
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn btn-submit" onclick="calculateScore()">تصحيح 📝</button>
+            <button type="button" class="btn btn-reset" onclick="resetQuiz()">إعادة 🔄</button>
+        </div>
+    </form>
+
+    <div id="result-panel">
+        <h2>النتيجة النهائيّة</h2>
+        <p id="result-score" style="font-size: 22px; font-weight: bold; color: #2980B9;"></p>
+    </div>
+</div>
+
+<script>
+    function checkExpiryDate() {
+        const expiryDate = new Date(2026, 9, 15);
+        if (new Date() >= expiryDate) {
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('lockModal').style.display = 'flex';
+        }
+    }
+
+    function confirmLock() {
+        document.body.innerHTML = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; background:#0F172A; color:#F87171; font-size:24px; font-weight:bold;'>تم إغلاق الصفحة بنجاح.</div>";
+    }
+
+    checkExpiryDate();
+
+    function setFeedback(id, ok, txt) {
+        let e = document.getElementById(id);
+        e.style.display = 'block';
+        e.className = ok ? 'feedback correct-feedback' : 'feedback wrong-feedback';
+        e.innerHTML = ok ? '✔️ صحيح' : '❌ الصحيح: ' + txt;
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let total = 20;
+
+        let checkRadio = (name, val, fbId, correctTxt) => {
+            let userVal = document.querySelector(`input[name="${name}"]:checked`)?.value;
+            let ok = userVal === val;
+            if(ok) score++;
+            setFeedback(fbId, ok, correctTxt);
+        };
+        let checkSelect = (id, val, fbId, correctTxt) => {
+            let userVal = document.getElementById(id).value;
+            let ok = userVal === val;
+            if(ok) score++;
+            setFeedback(fbId, ok, correctTxt);
+        };
+
+        checkRadio('p1_q1', 'B', 'fb_p1_q1', 'B. My name is Ali .');
+        checkRadio('p1_q2', 'A', 'fb_p1_q2', "A. It's a seal.");
+        
+        checkSelect('tf1', 'true', 'fb_tf1', 'True');
+        checkSelect('tf2', 'false', 'fb_tf2', 'False');
+        checkSelect('tf3', 'true', 'fb_tf3', 'True');
+
+        checkRadio('g1', 'whose', 'fb_g1', 'whose');
+        checkRadio('g2', 'slow', 'fb_g2', 'slow');
+
+        checkRadio('g3', 'my', 'fb_g3', 'my');
+        checkRadio('g4', 'have', 'fb_g4', 'have');
+
+        checkSelect('v1', 'sandals', 'fb_v1', 'sandals');
+        checkSelect('v2', 'cap', 'fb_v2', 'cap');
+        checkSelect('v3', 'T-shirts', 'fb_v3', 'T-shirts');
+        checkSelect('v4', 'starfish', 'fb_v4', 'starfish');
+        checkSelect('v5', 'crab', 'fb_v5', 'crab');
+        checkSelect('v6', 'Seahorse', 'fb_v6', 'Seahorse');
+
+        checkSelect('l1', 'ee', 'fb_l1', 'ee (sheep)');
+        checkSelect('l2', 'ea', 'fb_l2', 'ea (meat)');
+        checkSelect('l3', 'ay', 'fb_l3', 'ay (play)');
+        checkSelect('l4', 'ow', 'fb_l4', 'ow (cow)');
+        checkSelect('l5', 'ou', 'fb_l5', 'ou (mouse)');
+
+        document.getElementById('result-score').innerText = `حصلت على: ${score} من ${total}`;
+        document.getElementById('result-panel').style.display = 'block';
+    }
+
+    function resetQuiz() {
+        document.getElementById('quizForm').reset();
+        document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+        document.getElementById('result-panel').style.display = 'none';
+
+        document.querySelectorAll('.shuffle-container').forEach(container => {
+            let labels = Array.from(container.children);
+            labels.sort(() => Math.random() - 0.5);
+            labels.forEach(label => container.appendChild(label));
+        });
+
+        document.querySelectorAll('.shuffle-select').forEach(select => {
+            let options = Array.from(select.options);
+            let firstOpt = options.shift();
+            options.sort(() => Math.random() - 0.5);
+            select.innerHTML = '';
+            select.appendChild(firstOpt);
+            options.forEach(opt => select.appendChild(opt));
+        });
+    }
+</script>
+
+</body>
+</html>

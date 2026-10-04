@@ -1,0 +1,37 @@
+.question{
+    background:#5b95d1;
+    color:white;
+    font-size:24px;
+    padding:15px;
+    border-radius:10px;
+    width:70%;
+    margin:20px auto;
+}
+
+.answer{
+    display:block;
+    width:90%;
+    margin:12px auto;
+    padding:15px;
+    background:#4ed15c;
+    color:white;
+    font-size:22px;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+}
+
+.answer input{
+    margin-left:10px;
+}
+
+#next{
+    background:#a34d00;
+    color:white;
+    border:none;
+    padding:10px 50px;
+    font-size:28px;
+    border-radius:10px;
+    cursor:pointer;
+    margin-top:20px;
+}
